@@ -1,7 +1,7 @@
 name: display_timer
-description: A new Flutter package project.
+description: A highly customizible Flutter widget that fires a timer and update it's own ui to reflect the value of the current timer
 version: 1.0.0
-homepage:
+homepage: https://github.com/rodrigobastosv/display_timer
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
