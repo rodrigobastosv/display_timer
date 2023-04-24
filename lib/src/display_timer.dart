@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+/// Widget builder that receives the values and returns the desired Widget.
 typedef DisplayTimerBuilder = Widget Function(
     String hours, String minutes, String seconds);
 
@@ -14,8 +15,13 @@ class DisplayTimer extends StatefulWidget {
     this.onTimerEnd,
   });
 
+  /// Duration of the timer that will be created
   final Duration timerDuration;
+
+  /// Widget builder that receives the values and returns the desired Widget.
   final DisplayTimerBuilder displayTimerBuilder;
+
+  /// Callback that will be executed when the timer finishes
   final AsyncCallback? onTimerEnd;
 
   @override
