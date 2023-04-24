@@ -41,21 +41,25 @@ class _DisplayTimerState extends State<DisplayTimer> {
   String get displayMinutes => minutesLeft.toString().padLeft(2, '0');
   String get displaySeconds => (secondsLeft % 60).toString().padLeft(2, '0');
 
+  late Timer timerRef;
+
   void startPeriodicTimer() {
-    Timer.periodic(
+    timerRef = Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
-        setState(() {
-          currentSeconds = timer.tick;
-          secondsLeft = timerDurationInSeconds - currentSeconds;
-          if (timer.tick >= timerDurationInSeconds) {
-            timer.cancel();
+        if (mounted) {
+          setState(() {
+            currentSeconds = timer.tick;
+            secondsLeft = timerDurationInSeconds - currentSeconds;
+            if (timer.tick >= timerDurationInSeconds) {
+              timer.cancel();
 
-            if (widget.onTimerEnd != null) {
-              widget.onTimerEnd!();
+              if (widget.onTimerEnd != null) {
+                widget.onTimerEnd!();
+              }
             }
-          }
-        });
+          });
+        }
       },
     );
   }
@@ -67,7 +71,14 @@ class _DisplayTimerState extends State<DisplayTimer> {
   }
 
   @override
+  void dispose() {
+    timerRef.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return widget.displayTimerBuilder(displayHours, displayMinutes, displaySeconds);
+    return widget.displayTimerBuilder(
+        displayHours, displayMinutes, displaySeconds);
   }
 }
